@@ -1,208 +1,388 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MP4 Uploader • Pages + GitHub + jsDelivr</title>
+  <title>MP4 Uploader → GitHub → Pages → jsDelivr</title>
   <style>
     :root {
-      color-scheme: dark;
       --bg: #0b1020;
-      --card: #141b34;
-      --muted: #92a0c6;
-      --text: #eef2ff;
-      --accent: #5eead4;
-      --danger: #fb7185;
-      --border: rgba(255,255,255,0.1);
+      --panel: #121933;
+      --text: #eaf0ff;
+      --muted: #9fb0d9;
+      --accent: #6ea8fe;
+      --danger: #ff6b6b;
+      --ok: #51cf66;
+      --border: #253056;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: radial-gradient(circle at top, #12204d 0%, var(--bg) 45%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(180deg, #0b1020, #0f1730);
       color: var(--text);
       min-height: 100vh;
-      display: grid;
-      place-items: center;
       padding: 24px;
+    }
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
     }
     .card {
-      width: min(760px, 100%);
-      background: rgba(20, 27, 52, 0.92);
+      background: rgba(18, 25, 51, 0.92);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      backdrop-filter: blur(8px);
     }
-    h1 { margin-top: 0; font-size: 1.9rem; }
-    p { color: var(--muted); line-height: 1.55; }
-    .warning {
-      margin: 16px 0 22px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: rgba(251, 113, 133, 0.12);
-      border: 1px solid rgba(251, 113, 133, 0.28);
-      color: #ffd6de;
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
     }
-    form {
+    p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .row {
       display: grid;
-      gap: 14px;
-      margin-top: 18px;
+      gap: 16px;
+    }
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      transition: 0.2s ease;
+      background: rgba(255,255,255,0.02);
+    }
+    .dropzone.dragover {
+      border-color: var(--accent);
+      background: rgba(110,168,254,0.08);
     }
     input[type="file"] {
       width: 100%;
-      padding: 16px;
-      border-radius: 14px;
-      border: 1px dashed var(--border);
-      background: rgba(255,255,255,0.04);
       color: var(--text);
     }
     button {
       border: 0;
-      border-radius: 14px;
-      padding: 14px 18px;
-      font-size: 1rem;
+      border-radius: 12px;
+      padding: 12px 16px;
+      background: var(--accent);
+      color: #081224;
       font-weight: 700;
       cursor: pointer;
-      background: linear-gradient(135deg, #2dd4bf, #38bdf8);
-      color: #04101b;
     }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-    .meta {
-      font-size: 0.95rem;
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .small {
+      font-size: 13px;
       color: var(--muted);
     }
-    .result {
-      margin-top: 22px;
-      display: none;
-      padding: 18px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
-    }
-    .result.show { display: block; }
-    .row { margin: 10px 0; }
-    .label { font-size: 0.9rem; color: var(--muted); margin-bottom: 4px; }
-    .value {
-      word-break: break-all;
-      padding: 12px;
+    .status {
+      margin-top: 14px;
+      padding: 12px 14px;
       border-radius: 12px;
-      background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.9rem;
+      background: rgba(255,255,255,0.03);
+      white-space: pre-wrap;
+      word-break: break-word;
     }
-    .status { margin-top: 10px; min-height: 1.2rem; }
-    .ok { color: var(--accent); }
-    .err { color: var(--danger); }
+    .status.ok { border-color: rgba(81,207,102,0.45); }
+    .status.err { border-color: rgba(255,107,107,0.45); }
+    .result {
+      margin-top: 18px;
+      display: grid;
+      gap: 10px;
+    }
+    .result a {
+      color: #9ec5fe;
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .meta {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+    @media (min-width: 720px) {
+      .grid.two {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    code {
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+    .copy-btn {
+      background: #dbeafe;
+      margin-left: 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+    .line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
-  <main class="card">
-    <h1>MP4 uploader qua GitHub Contents API</h1>
-    <p>
-      Flow: chọn file MP4 → Pages Function nhận file → commit vào repo tại
-      <code>public/uploads/</code> → Cloudflare Pages tự deploy lại → trả về URL Pages và jsDelivr.
-    </p>
-    <div class="warning">
-      Dùng tốt cho demo/MVP nhỏ. Không nên dùng cho video lớn hoặc upload thường xuyên.
-      GitHub web UI có giới hạn 25 MiB; GitHub Contents API hỗ trợ tối đa 100 MB theo tài liệu,
-      nhưng thực tế nên giữ nhỏ hơn đáng kể để giảm lỗi và thời gian deploy.
+  <div class="wrap">
+    <div class="card">
+      <h1>MP4 Uploader</h1>
+      <p>
+        Upload file MP4 lên GitHub qua Pages Function, sau đó lấy lại URL từ Pages và jsDelivr.
+      </p>
+
+      <div class="grid two">
+        <div class="dropzone" id="dropzone">
+          <p><strong>Kéo thả file MP4 vào đây</strong></p>
+          <p class="small">hoặc chọn file bên dưới</p>
+          <input id="fileInput" type="file" accept="video/mp4" />
+        </div>
+
+        <div class="row">
+          <div class="small">
+            API debug:
+            <div><a href="/api/debug-github" target="_blank">/api/debug-github</a></div>
+            <div><a href="/api/debug-env" target="_blank">/api/debug-env</a></div>
+          </div>
+          <div class="small">
+            Lưu ý:
+            <div>- GitHub token phải là fine-grained token</div>
+            <div>- Cần quyền <code>Contents: Read and write</code></div>
+            <div>- Repo nên là public nếu dùng jsDelivr</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="meta" id="fileMeta"></div>
+
+      <div class="line" style="margin-top:16px;">
+        <button id="uploadBtn">Upload MP4</button>
+        <span class="small" id="busyText"></span>
+      </div>
+
+      <div id="status" class="status" style="display:none;"></div>
+
+      <div id="result" class="result" style="display:none;">
+        <div>
+          <strong>Pages URL:</strong>
+          <div class="line">
+            <a id="pagesUrl" href="#" target="_blank" rel="noopener noreferrer"></a>
+            <button class="copy-btn" data-copy-target="pagesUrl">Copy</button>
+          </div>
+        </div>
+
+        <div>
+          <strong>jsDelivr URL:</strong>
+          <div class="line">
+            <a id="jsdUrl" href="#" target="_blank" rel="noopener noreferrer"></a>
+            <button class="copy-btn" data-copy-target="jsdUrl">Copy</button>
+          </div>
+        </div>
+
+        <div>
+          <strong>Commit URL:</strong>
+          <div class="line">
+            <a id="commitUrl" href="#" target="_blank" rel="noopener noreferrer"></a>
+            <button class="copy-btn" data-copy-target="commitUrl">Copy</button>
+          </div>
+        </div>
+
+        <div>
+          <strong>Saved Path:</strong>
+          <div id="savedPath" class="small"></div>
+        </div>
+
+        <div>
+          <strong>Original Name:</strong>
+          <div id="originalName" class="small"></div>
+        </div>
+
+        <div>
+          <strong>Safe Name:</strong>
+          <div id="safeName" class="small"></div>
+        </div>
+      </div>
     </div>
-
-    <form id="uploadForm">
-      <input id="fileInput" type="file" name="file" accept="video/mp4" required />
-      <div class="meta" id="fileMeta">Chưa có tệp nào được chọn.</div>
-      <button id="submitBtn" type="submit">Upload MP4</button>
-      <div class="status" id="status"></div>
-    </form>
-
-    <section class="result" id="resultBox">
-      <div class="row">
-        <div class="label">Tên file đã lưu</div>
-        <div class="value" id="savedFileName"></div>
-      </div>
-      <div class="row">
-        <div class="label">Pages URL</div>
-        <div class="value" id="pagesUrl"></div>
-      </div>
-      <div class="row">
-        <div class="label">jsDelivr URL</div>
-        <div class="value" id="jsdelivrUrl"></div>
-      </div>
-      <div class="row">
-        <div class="label">GitHub commit URL</div>
-        <div class="value" id="commitUrl"></div>
-      </div>
-      <div class="row">
-        <div class="label">Lưu ý</div>
-        <div class="value" id="note"></div>
-      </div>
-    </section>
-  </main>
+  </div>
 
   <script>
-    const form = document.getElementById('uploadForm');
-    const fileInput = document.getElementById('fileInput');
-    const fileMeta = document.getElementById('fileMeta');
-    const statusEl = document.getElementById('status');
-    const submitBtn = document.getElementById('submitBtn');
-    const resultBox = document.getElementById('resultBox');
+    const fileInput = document.getElementById("fileInput");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const statusBox = document.getElementById("status");
+    const resultBox = document.getElementById("result");
+    const busyText = document.getElementById("busyText");
+    const fileMeta = document.getElementById("fileMeta");
+    const dropzone = document.getElementById("dropzone");
 
-    const fmt = new Intl.NumberFormat('vi-VN');
+    let selectedFile = null;
 
-    fileInput.addEventListener('change', () => {
-      const file = fileInput.files?.[0];
+    function formatBytes(bytes) {
+      if (!bytes && bytes !== 0) return "-";
+      const units = ["B", "KB", "MB", "GB"];
+      let i = 0;
+      let value = bytes;
+      while (value >= 1024 && i < units.length - 1) {
+        value /= 1024;
+        i++;
+      }
+      return `${value.toFixed(2)} ${units[i]}`;
+    }
+
+    function setStatus(message, type = "") {
+      statusBox.style.display = "block";
+      statusBox.className = `status ${type}`.trim();
+      statusBox.textContent = message;
+    }
+
+    function clearResult() {
+      resultBox.style.display = "none";
+      document.getElementById("pagesUrl").textContent = "";
+      document.getElementById("pagesUrl").href = "#";
+      document.getElementById("jsdUrl").textContent = "";
+      document.getElementById("jsdUrl").href = "#";
+      document.getElementById("commitUrl").textContent = "";
+      document.getElementById("commitUrl").href = "#";
+      document.getElementById("savedPath").textContent = "";
+      document.getElementById("originalName").textContent = "";
+      document.getElementById("safeName").textContent = "";
+    }
+
+    function updateMeta(file) {
       if (!file) {
-        fileMeta.textContent = 'Chưa có tệp nào được chọn.';
+        fileMeta.innerHTML = "";
         return;
       }
-      const mb = (file.size / 1024 / 1024).toFixed(2);
-      fileMeta.textContent = `${file.name} • ${mb} MB • ${file.type || 'unknown'}`;
+      fileMeta.innerHTML = `
+        <div><strong>Tên file:</strong> ${file.name}</div>
+        <div><strong>Loại:</strong> ${file.type || "unknown"}</div>
+        <div><strong>Kích thước:</strong> ${formatBytes(file.size)}</div>
+      `;
+    }
+
+    fileInput.addEventListener("change", () => {
+      selectedFile = fileInput.files?.[0] || null;
+      updateMeta(selectedFile);
+      clearResult();
+      statusBox.style.display = "none";
     });
 
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const file = fileInput.files?.[0];
-      if (!file) {
-        statusEl.className = 'status err';
-        statusEl.textContent = 'Bạn chưa chọn file MP4.';
+    ["dragenter", "dragover"].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.add("dragover");
+      });
+    });
+
+    ["dragleave", "drop"].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.remove("dragover");
+      });
+    });
+
+    dropzone.addEventListener("drop", (e) => {
+      const file = e.dataTransfer?.files?.[0];
+      if (!file) return;
+      selectedFile = file;
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      fileInput.files = dt.files;
+      updateMeta(selectedFile);
+      clearResult();
+      statusBox.style.display = "none";
+    });
+
+    uploadBtn.addEventListener("click", async () => {
+      clearResult();
+
+      if (!selectedFile) {
+        setStatus("Chưa chọn file MP4.", "err");
         return;
       }
 
-      statusEl.className = 'status';
-      statusEl.textContent = 'Đang upload và tạo commit...';
-      resultBox.classList.remove('show');
-      submitBtn.disabled = true;
+      if (!selectedFile.name.toLowerCase().endsWith(".mp4")) {
+        setStatus("Chỉ hỗ trợ file .mp4", "err");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      uploadBtn.disabled = true;
+      busyText.textContent = "Đang upload...";
+      setStatus("Đang gửi file lên API...", "");
 
       try {
-        const fd = new FormData();
-        fd.append('file', file);
-
-        const res = await fetch('/api/upload', {
-          method: 'POST',
-          body: fd
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData
         });
 
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Upload thất bại.');
+        const data = await response.json().catch(() => ({}));
 
-        document.getElementById('savedFileName').textContent = data.file_name;
-        document.getElementById('pagesUrl').textContent = data.pages_url;
-        document.getElementById('jsdelivrUrl').textContent = data.jsdelivr_url;
-        document.getElementById('commitUrl').textContent = data.commit_url || 'Không có';
-        document.getElementById('note').textContent = data.note;
+        if (!response.ok) {
+          const pretty = JSON.stringify(data, null, 2);
+          setStatus(`Upload lỗi (${response.status})\n${pretty}`, "err");
+          return;
+        }
 
-        resultBox.classList.add('show');
-        statusEl.className = 'status ok';
-        statusEl.textContent = 'Đã tạo commit thành công.';
+        setStatus("Upload thành công. Có thể cần chờ Pages redeploy vài chục giây trước khi mở URL.", "ok");
+
+        document.getElementById("pagesUrl").textContent = data.pages_url || "";
+        document.getElementById("pagesUrl").href = data.pages_url || "#";
+
+        document.getElementById("jsdUrl").textContent = data.jsdelivr_url || "";
+        document.getElementById("jsdUrl").href = data.jsdelivr_url || "#";
+
+        document.getElementById("commitUrl").textContent = data.commit_url || "";
+        document.getElementById("commitUrl").href = data.commit_url || "#";
+
+        document.getElementById("savedPath").textContent = data.path || "";
+        document.getElementById("originalName").textContent = data.original_filename || "";
+        document.getElementById("safeName").textContent = data.safe_filename || "";
+
+        resultBox.style.display = "grid";
       } catch (err) {
-        statusEl.className = 'status err';
-        statusEl.textContent = err.message || 'Có lỗi xảy ra.';
+        setStatus(`Lỗi mạng hoặc exception:\n${err.message}`, "err");
       } finally {
-        submitBtn.disabled = false;
+        uploadBtn.disabled = false;
+        busyText.textContent = "";
       }
+    });
+
+    document.querySelectorAll("[data-copy-target]").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const targetId = btn.getAttribute("data-copy-target");
+        const el = document.getElementById(targetId);
+        const text = el?.textContent || "";
+        if (!text) return;
+
+        try {
+          await navigator.clipboard.writeText(text);
+          const old = btn.textContent;
+          btn.textContent = "Copied";
+          setTimeout(() => { btn.textContent = old; }, 1000);
+        } catch {
+          alert("Không copy được.");
+        }
+      });
     });
   </script>
 </body>
