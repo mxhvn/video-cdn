@@ -9,26 +9,22 @@
     :root {
       --bg: #0b1220;
       --panel: rgba(15, 23, 42, 0.88);
-      --panel-strong: #111827;
       --text: #e5eefc;
       --muted: #94a3b8;
       --line: rgba(148, 163, 184, 0.16);
       --line-strong: rgba(148, 163, 184, 0.24);
       --brand: #60a5fa;
-      --brand-2: #3b82f6;
       --success: #22c55e;
       --danger: #ef4444;
+      --warning: #f59e0b;
       --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
       --radius-xl: 24px;
       --radius-lg: 18px;
       --radius-md: 14px;
-      --radius-sm: 12px;
-      --maxw: 920px;
+      --maxw: 1080px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
@@ -42,19 +38,11 @@
         linear-gradient(180deg, #08111f 0%, #0b1220 45%, #0a1020 100%);
     }
 
-    body {
-      padding: 32px 18px 48px;
-    }
+    body { padding: 28px 16px 40px; }
 
-    .shell {
-      max-width: var(--maxw);
-      margin: 0 auto;
-    }
+    .shell { max-width: var(--maxw); margin: 0 auto; }
 
-    .hero {
-      margin-bottom: 18px;
-      padding: 4px 2px 0;
-    }
+    .hero { margin-bottom: 18px; }
 
     .eyebrow {
       display: inline-flex;
@@ -81,21 +69,21 @@
 
     h1 {
       margin: 18px 0 10px;
-      font-size: clamp(30px, 5vw, 48px);
+      font-size: clamp(30px, 5vw, 46px);
       line-height: 1.06;
       letter-spacing: -0.03em;
     }
 
     .sub {
       margin: 0;
-      max-width: 720px;
+      max-width: 760px;
       font-size: 16px;
       line-height: 1.7;
       color: var(--muted);
     }
 
     .card {
-      margin-top: 26px;
+      margin-top: 24px;
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
@@ -104,35 +92,27 @@
       overflow: hidden;
     }
 
-    .card-inner {
-      padding: 26px;
-    }
+    .card-inner { padding: 24px; }
 
     .dropzone {
-      position: relative;
       border: 1.5px dashed rgba(96,165,250,0.35);
       border-radius: 20px;
       padding: 28px 20px;
-      min-height: 220px;
+      min-height: 210px;
       display: grid;
       place-items: center;
       text-align: center;
-      background:
-        linear-gradient(180deg, rgba(96,165,250,0.06), rgba(255,255,255,0.02));
+      background: linear-gradient(180deg, rgba(96,165,250,0.06), rgba(255,255,255,0.02));
       transition: 0.22s ease;
     }
 
     .dropzone.dragover {
       transform: translateY(-1px);
       border-color: rgba(96,165,250,0.78);
-      background:
-        linear-gradient(180deg, rgba(96,165,250,0.14), rgba(255,255,255,0.03));
-      box-shadow: inset 0 0 0 1px rgba(96,165,250,0.18);
+      background: linear-gradient(180deg, rgba(96,165,250,0.14), rgba(255,255,255,0.03));
     }
 
-    .drop-inner {
-      max-width: 520px;
-    }
+    .drop-inner { max-width: 560px; }
 
     .icon-wrap {
       width: 72px;
@@ -143,14 +123,9 @@
       place-items: center;
       background: linear-gradient(180deg, rgba(96,165,250,0.18), rgba(59,130,246,0.08));
       border: 1px solid rgba(96,165,250,0.22);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
 
-    .icon-wrap svg {
-      width: 34px;
-      height: 34px;
-      opacity: 0.96;
-    }
+    .icon-wrap svg { width: 34px; height: 34px; }
 
     .drop-title {
       margin: 0 0 10px;
@@ -178,17 +153,9 @@
       font-weight: 700;
       cursor: pointer;
       transition: 0.18s ease;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
     }
 
-    .file-trigger:hover {
-      transform: translateY(-1px);
-      border-color: rgba(96,165,250,0.45);
-    }
-
-    .file-trigger input {
-      display: none;
-    }
+    .file-trigger input { display: none; }
 
     .selected {
       margin-top: 16px;
@@ -197,76 +164,77 @@
       word-break: break-word;
     }
 
-    .meta {
-      display: none;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .meta.show {
-      display: grid;
-    }
-
-    .meta-item {
-      padding: 16px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line);
-    }
-
-    .meta-label {
-      display: block;
-      margin-bottom: 7px;
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .meta-value {
-      font-size: 14px;
-      line-height: 1.55;
-      color: #edf4ff;
-      word-break: break-word;
-    }
-
-    .actions {
+    .toolbar {
       display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-top: 22px;
+      gap: 12px;
       flex-wrap: wrap;
+      margin-top: 22px;
+      align-items: center;
+    }
+
+    .btn-primary, .btn-secondary, .btn-danger {
+      appearance: none;
+      border-radius: 14px;
+      padding: 13px 16px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.18s ease;
     }
 
     .btn-primary {
-      appearance: none;
       border: 0;
-      border-radius: 14px;
-      padding: 14px 18px;
-      font-size: 15px;
-      font-weight: 800;
       color: #08111f;
       background: linear-gradient(180deg, #93c5fd 0%, #60a5fa 100%);
-      cursor: pointer;
-      transition: 0.18s ease;
       min-width: 160px;
-      box-shadow: 0 10px 30px rgba(59,130,246,0.28);
     }
 
-    .btn-primary:hover:not(:disabled) {
-      transform: translateY(-1px);
+    .btn-secondary {
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.05);
+      color: #eef5ff;
     }
 
-    .btn-primary:disabled {
+    .btn-danger {
+      border: 1px solid rgba(239,68,68,0.25);
+      background: rgba(239,68,68,0.08);
+      color: #ffd9d9;
+    }
+
+    .btn-primary:disabled,
+    .btn-secondary:disabled,
+    .btn-danger:disabled {
       opacity: 0.55;
       cursor: not-allowed;
-      box-shadow: none;
     }
 
-    .busy {
+    .summary {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .summary-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .summary-label {
+      font-size: 12px;
       color: var(--muted);
-      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 7px;
+      display: block;
+    }
+
+    .summary-value {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
     }
 
     .status {
@@ -281,106 +249,98 @@
       line-height: 1.6;
     }
 
-    .status.show {
-      display: block;
-    }
+    .status.show { display: block; }
+    .status.ok { border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.06); }
+    .status.err { border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.06); }
 
-    .status.ok {
-      border-color: rgba(34,197,94,0.35);
-      background: rgba(34,197,94,0.06);
-    }
-
-    .status.err {
-      border-color: rgba(239,68,68,0.35);
-      background: rgba(239,68,68,0.06);
-    }
-
-    .result {
-      display: none;
+    .queue-wrap {
       margin-top: 22px;
-      gap: 14px;
-    }
-
-    .result.show {
-      display: grid;
-    }
-
-    .result-card {
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .result-title {
-      margin: 0 0 10px;
-      font-size: 13px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .result-link-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .result-link {
-      color: #b9d6ff;
-      text-decoration: none;
-      line-height: 1.6;
-      word-break: break-all;
-      font-size: 14px;
-      flex: 1 1 420px;
-    }
-
-    .copy-btn {
-      appearance: none;
-      border: 1px solid var(--line-strong);
-      background: rgba(255,255,255,0.05);
-      color: #eef5ff;
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.18s ease;
-    }
-
-    .copy-btn:hover {
-      background: rgba(255,255,255,0.08);
-    }
-
-    .details {
-      display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-top: 4px;
-    }
-
-    .detail {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
+      border-radius: 20px;
+      overflow: hidden;
       background: rgba(255,255,255,0.02);
     }
 
-    .detail-label {
-      display: block;
-      margin-bottom: 8px;
+    .queue-head {
+      display: grid;
+      grid-template-columns: 44px 1.5fr 110px 120px 1fr 1fr;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
       color: var(--muted);
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
 
-    .detail-value {
-      font-size: 14px;
-      line-height: 1.6;
+    .queue-list {
+      display: grid;
+    }
+
+    .queue-item {
+      display: grid;
+      grid-template-columns: 44px 1.5fr 110px 120px 1fr 1fr;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(148,163,184,0.08);
+      align-items: center;
+    }
+
+    .queue-item:last-child { border-bottom: 0; }
+
+    .idx {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.06);
+      font-size: 13px;
+      font-weight: 700;
+      color: #dce9ff;
+    }
+
+    .file-name {
+      font-weight: 700;
       color: #edf4ff;
       word-break: break-word;
+    }
+
+    .file-size, .file-type {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      width: fit-content;
+    }
+
+    .pill.waiting { background: rgba(255,255,255,0.06); color: #dbe7fb; }
+    .pill.uploading { background: rgba(96,165,250,0.12); color: #bdddff; }
+    .pill.success { background: rgba(34,197,94,0.12); color: #baf7cc; }
+    .pill.error { background: rgba(239,68,68,0.12); color: #ffc8c8; }
+    .pill.skipped { background: rgba(245,158,11,0.12); color: #ffe2a8; }
+
+    .item-message,
+    .item-link {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+      word-break: break-word;
+    }
+
+    .item-link a {
+      color: #b9d6ff;
+      text-decoration: none;
     }
 
     .footer {
@@ -390,32 +350,30 @@
       text-align: center;
     }
 
-    @media (max-width: 760px) {
-      body {
-        padding: 18px 14px 36px;
-      }
+    @media (max-width: 980px) {
+      .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-      .card-inner {
-        padding: 18px;
-      }
+      .queue-head { display: none; }
 
-      .dropzone {
-        min-height: 200px;
-        padding: 22px 16px;
-      }
-
-      .meta,
-      .details {
+      .queue-item {
         grid-template-columns: 1fr;
+        gap: 10px;
       }
 
-      .btn-primary {
-        width: 100%;
+      .queue-item > div {
+        min-width: 0;
       }
 
-      .actions {
-        align-items: stretch;
+      .idx {
+        margin-bottom: 4px;
       }
+    }
+
+    @media (max-width: 760px) {
+      h1 { font-size: 34px; }
+      .summary { grid-template-columns: 1fr; }
+      .btn-primary, .btn-secondary, .btn-danger { width: 100%; }
+      .toolbar { align-items: stretch; }
     }
   </style>
 </head>
@@ -423,9 +381,9 @@
   <main class="shell">
     <section class="hero">
       <span class="eyebrow">Secure Upload Portal</span>
-      <h1>Upload video nhanh chóng, nhận URL sẵn sàng để chia sẻ</h1>
+      <h1>Batch upload video theo hàng đợi</h1>
       <p class="sub">
-        Tải lên file MP4 và hệ thống sẽ tự động xử lý, lưu trữ và trả về các đường dẫn truy cập ngay sau khi hoàn tất.
+        Chọn nhiều file MP4 và hệ thống sẽ tải lên lần lượt từng file cho đến khi hoàn tất toàn bộ danh sách.
       </p>
     </section>
 
@@ -441,85 +399,61 @@
               </svg>
             </div>
 
-            <h2 class="drop-title">Kéo thả file MP4 vào đây</h2>
+            <h2 class="drop-title">Kéo thả nhiều file MP4 vào đây</h2>
             <p class="drop-copy">
-              Hoặc chọn file từ thiết bị của bạn để bắt đầu tải lên.
+              Hoặc chọn nhiều file từ thiết bị của bạn để thêm vào hàng đợi upload.
             </p>
 
             <label class="file-trigger">
-              Chọn file MP4
-              <input id="fileInput" type="file" accept="video/mp4" />
+              Chọn nhiều file MP4
+              <input id="fileInput" type="file" accept="video/mp4" multiple />
             </label>
 
-            <div class="selected" id="selectedText">Chưa có file nào được chọn</div>
+            <div class="selected" id="selectedText">Chưa có file nào trong hàng đợi</div>
           </div>
         </div>
 
-        <div class="meta" id="fileMeta">
-          <div class="meta-item">
-            <span class="meta-label">Tên file</span>
-            <div class="meta-value" id="metaName">-</div>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Định dạng</span>
-            <div class="meta-value" id="metaType">-</div>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Kích thước</span>
-            <div class="meta-value" id="metaSize">-</div>
-          </div>
+        <div class="toolbar">
+          <button id="uploadAllBtn" class="btn-primary">Upload tất cả</button>
+          <button id="clearQueueBtn" class="btn-secondary">Xóa danh sách</button>
+          <button id="stopBtn" class="btn-danger" disabled>Dừng sau file hiện tại</button>
         </div>
 
-        <div class="actions">
-          <button id="uploadBtn" class="btn-primary">Upload video</button>
-          <span class="busy" id="busyText"></span>
+        <div class="summary">
+          <div class="summary-card">
+            <span class="summary-label">Tổng số file</span>
+            <div class="summary-value" id="sumTotal">0</div>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">Thành công</span>
+            <div class="summary-value" id="sumSuccess">0</div>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">Thất bại</span>
+            <div class="summary-value" id="sumError">0</div>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">Đang chờ</span>
+            <div class="summary-value" id="sumWaiting">0</div>
+          </div>
         </div>
 
         <div id="status" class="status"></div>
 
-        <div id="result" class="result">
-          <div class="result-card">
-            <div class="result-title">Pages URL</div>
-            <div class="result-link-row">
-              <a id="pagesUrl" class="result-link" href="#" target="_blank" rel="noopener noreferrer"></a>
-              <button class="copy-btn" data-copy-target="pagesUrl">Copy</button>
-            </div>
+        <div class="queue-wrap">
+          <div class="queue-head">
+            <div>#</div>
+            <div>Tệp</div>
+            <div>Kích thước</div>
+            <div>Trạng thái</div>
+            <div>Thông báo</div>
+            <div>Liên kết</div>
           </div>
-
-          <div class="result-card">
-            <div class="result-title">jsDelivr URL</div>
-            <div class="result-link-row">
-              <a id="jsdUrl" class="result-link" href="#" target="_blank" rel="noopener noreferrer"></a>
-              <button class="copy-btn" data-copy-target="jsdUrl">Copy</button>
-            </div>
-          </div>
-
-          <div class="result-card">
-            <div class="result-title">Commit URL</div>
-            <div class="result-link-row">
-              <a id="commitUrl" class="result-link" href="#" target="_blank" rel="noopener noreferrer"></a>
-              <button class="copy-btn" data-copy-target="commitUrl">Copy</button>
-            </div>
-          </div>
-
-          <div class="details">
-            <div class="detail">
-              <span class="detail-label">Saved Path</span>
-              <div id="savedPath" class="detail-value">-</div>
-            </div>
-            <div class="detail">
-              <span class="detail-label">Original Name</span>
-              <div id="originalName" class="detail-value">-</div>
-            </div>
-            <div class="detail">
-              <span class="detail-label">Safe Name</span>
-              <div id="safeName" class="detail-value">-</div>
-            </div>
-          </div>
+          <div id="queueList" class="queue-list"></div>
         </div>
 
         <div class="footer">
-          Hệ thống đã sẵn sàng để sử dụng trong môi trường production.
+          Các tệp sẽ được tải lên tuần tự để đảm bảo ổn định và dễ theo dõi kết quả.
         </div>
       </div>
     </section>
@@ -527,15 +461,22 @@
 
   <script>
     const fileInput = document.getElementById("fileInput");
-    const uploadBtn = document.getElementById("uploadBtn");
-    const statusBox = document.getElementById("status");
-    const resultBox = document.getElementById("result");
-    const busyText = document.getElementById("busyText");
     const dropzone = document.getElementById("dropzone");
-    const fileMeta = document.getElementById("fileMeta");
     const selectedText = document.getElementById("selectedText");
+    const uploadAllBtn = document.getElementById("uploadAllBtn");
+    const clearQueueBtn = document.getElementById("clearQueueBtn");
+    const stopBtn = document.getElementById("stopBtn");
+    const statusBox = document.getElementById("status");
+    const queueList = document.getElementById("queueList");
 
-    let selectedFile = null;
+    const sumTotal = document.getElementById("sumTotal");
+    const sumSuccess = document.getElementById("sumSuccess");
+    const sumError = document.getElementById("sumError");
+    const sumWaiting = document.getElementById("sumWaiting");
+
+    let uploadQueue = [];
+    let isUploading = false;
+    let shouldStop = false;
 
     function formatBytes(bytes) {
       if (!bytes && bytes !== 0) return "-";
@@ -559,45 +500,189 @@
       statusBox.textContent = "";
     }
 
-    function clearResult() {
-      resultBox.classList.remove("show");
-      document.getElementById("pagesUrl").textContent = "";
-      document.getElementById("pagesUrl").href = "#";
-      document.getElementById("jsdUrl").textContent = "";
-      document.getElementById("jsdUrl").href = "#";
-      document.getElementById("commitUrl").textContent = "";
-      document.getElementById("commitUrl").href = "#";
-      document.getElementById("savedPath").textContent = "-";
-      document.getElementById("originalName").textContent = "-";
-      document.getElementById("safeName").textContent = "-";
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
-    function updateMeta(file) {
-      if (!file) {
-        fileMeta.classList.remove("show");
-        selectedText.textContent = "Chưa có file nào được chọn";
-        document.getElementById("metaName").textContent = "-";
-        document.getElementById("metaType").textContent = "-";
-        document.getElementById("metaSize").textContent = "-";
+    function updateSummary() {
+      const total = uploadQueue.length;
+      const success = uploadQueue.filter(x => x.status === "success").length;
+      const error = uploadQueue.filter(x => x.status === "error").length;
+      const waiting = uploadQueue.filter(x => x.status === "waiting" || x.status === "uploading").length;
+
+      sumTotal.textContent = total;
+      sumSuccess.textContent = success;
+      sumError.textContent = error;
+      sumWaiting.textContent = waiting;
+
+      selectedText.textContent = total
+        ? `${total} file trong hàng đợi`
+        : "Chưa có file nào trong hàng đợi";
+    }
+
+    function renderQueue() {
+      if (!uploadQueue.length) {
+        queueList.innerHTML = `
+          <div class="queue-item">
+            <div class="file-name" style="color:var(--muted);">Chưa có file nào được chọn</div>
+          </div>
+        `;
+        updateSummary();
         return;
       }
 
-      fileMeta.classList.add("show");
-      selectedText.textContent = file.name;
-      document.getElementById("metaName").textContent = file.name;
-      document.getElementById("metaType").textContent = file.type || "video/mp4";
-      document.getElementById("metaSize").textContent = formatBytes(file.size);
+      queueList.innerHTML = uploadQueue.map((item, index) => {
+        const linkHtml = item.pagesUrl
+          ? `<a href="${escapeHtml(item.pagesUrl)}" target="_blank" rel="noopener noreferrer">Pages URL</a>`
+          : item.jsdelivrUrl
+            ? `<a href="${escapeHtml(item.jsdelivrUrl)}" target="_blank" rel="noopener noreferrer">jsDelivr URL</a>`
+            : "-";
+
+        return `
+          <div class="queue-item">
+            <div class="idx">${index + 1}</div>
+            <div class="file-name">${escapeHtml(item.file.name)}</div>
+            <div class="file-size">${formatBytes(item.file.size)}</div>
+            <div><span class="pill ${item.status}">${escapeHtml(item.statusLabel)}</span></div>
+            <div class="item-message">${escapeHtml(item.message || "-")}</div>
+            <div class="item-link">${linkHtml}</div>
+          </div>
+        `;
+      }).join("");
+
+      updateSummary();
     }
 
-    function setFile(file) {
-      selectedFile = file || null;
-      updateMeta(selectedFile);
-      clearResult();
+    function addFiles(files) {
+      const incoming = Array.from(files || []);
+      if (!incoming.length) return;
+
+      for (const file of incoming) {
+        if (!file.name.toLowerCase().endsWith(".mp4")) {
+          uploadQueue.push({
+            file,
+            status: "skipped",
+            statusLabel: "Bỏ qua",
+            message: "Không đúng định dạng MP4",
+            pagesUrl: "",
+            jsdelivrUrl: ""
+          });
+          continue;
+        }
+
+        uploadQueue.push({
+          file,
+          status: "waiting",
+          statusLabel: "Chờ upload",
+          message: "Đang chờ xử lý",
+          pagesUrl: "",
+          jsdelivrUrl: ""
+        });
+      }
+
       clearStatus();
+      renderQueue();
+    }
+
+    function setButtons() {
+      uploadAllBtn.disabled = isUploading || uploadQueue.length === 0;
+      clearQueueBtn.disabled = isUploading;
+      stopBtn.disabled = !isUploading;
+    }
+
+    async function uploadSingle(item) {
+      item.status = "uploading";
+      item.statusLabel = "Đang upload";
+      item.message = "Đang tải lên hệ thống...";
+      renderQueue();
+
+      const formData = new FormData();
+      formData.append("file", item.file);
+
+      try {
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData
+        });
+
+        let data = {};
+        try {
+          data = await response.json();
+        } catch {
+          data = {};
+        }
+
+        if (!response.ok) {
+          item.status = "error";
+          item.statusLabel = "Thất bại";
+          item.message = data?.error
+            ? `${data.error}${data.github_status ? ` (${data.github_status})` : ""}`
+            : `Upload lỗi (${response.status})`;
+          renderQueue();
+          return;
+        }
+
+        item.status = "success";
+        item.statusLabel = "Thành công";
+        item.message = "Upload hoàn tất";
+        item.pagesUrl = data.pages_url || "";
+        item.jsdelivrUrl = data.jsdelivr_url || "";
+        renderQueue();
+      } catch (err) {
+        item.status = "error";
+        item.statusLabel = "Thất bại";
+        item.message = `Lỗi mạng: ${err.message}`;
+        renderQueue();
+      }
+    }
+
+    async function uploadAllSequentially() {
+      const pendingItems = uploadQueue.filter(x => x.status === "waiting");
+      if (!pendingItems.length) {
+        setStatus("Không có file nào đang chờ upload.", "err");
+        return;
+      }
+
+      isUploading = true;
+      shouldStop = false;
+      setButtons();
+      setStatus(`Bắt đầu upload ${pendingItems.length} file theo thứ tự.`, "ok");
+
+      for (const item of uploadQueue) {
+        if (shouldStop) {
+          setStatus("Đã dừng hàng đợi upload theo yêu cầu.", "err");
+          break;
+        }
+
+        if (item.status !== "waiting") {
+          continue;
+        }
+
+        await uploadSingle(item);
+      }
+
+      isUploading = false;
+      shouldStop = false;
+      setButtons();
+
+      const success = uploadQueue.filter(x => x.status === "success").length;
+      const error = uploadQueue.filter(x => x.status === "error").length;
+      const waiting = uploadQueue.filter(x => x.status === "waiting").length;
+
+      if (waiting === 0) {
+        setStatus(`Hoàn tất hàng đợi. Thành công: ${success}, Thất bại: ${error}.`, error ? "err" : "ok");
+      }
     }
 
     fileInput.addEventListener("change", () => {
-      setFile(fileInput.files?.[0] || null);
+      addFiles(fileInput.files);
+      fileInput.value = "";
+      setButtons();
     });
 
     ["dragenter", "dragover"].forEach((eventName) => {
@@ -617,102 +702,28 @@
     });
 
     dropzone.addEventListener("drop", (e) => {
-      const file = e.dataTransfer?.files?.[0];
-      if (!file) return;
-
-      const dt = new DataTransfer();
-      dt.items.add(file);
-      fileInput.files = dt.files;
-      setFile(file);
+      addFiles(e.dataTransfer?.files);
+      setButtons();
     });
 
-    uploadBtn.addEventListener("click", async () => {
-      clearResult();
-
-      if (!selectedFile) {
-        setStatus("Vui lòng chọn file MP4 trước khi tải lên.", "err");
-        return;
-      }
-
-      if (!selectedFile.name.toLowerCase().endsWith(".mp4")) {
-        setStatus("Hệ thống chỉ hỗ trợ định dạng MP4.", "err");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-
-      uploadBtn.disabled = true;
-      busyText.textContent = "Đang xử lý và tải lên...";
-      setStatus("Đang tải file lên hệ thống. Vui lòng chờ trong giây lát.");
-
-      try {
-        const response = await fetch("/api/upload", {
-          method: "POST",
-          body: formData
-        });
-
-        const data = await response.json().catch(() => ({}));
-
-        if (!response.ok) {
-          const message = data?.error
-            ? `${data.error}${data.github_status ? ` (${data.github_status})` : ""}`
-            : `Upload lỗi (${response.status})`;
-          setStatus(message, "err");
-          return;
-        }
-
-        setStatus(
-          "Upload thành công. Liên kết có thể cần vài chục giây để đồng bộ hoàn tất trước khi truy cập.",
-          "ok"
-        );
-
-        document.getElementById("pagesUrl").textContent = data.pages_url || "";
-        document.getElementById("pagesUrl").href = data.pages_url || "#";
-
-        document.getElementById("jsdUrl").textContent = data.jsdelivr_url || "";
-        document.getElementById("jsdUrl").href = data.jsdelivr_url || "#";
-
-        document.getElementById("commitUrl").textContent = data.commit_url || "";
-        document.getElementById("commitUrl").href = data.commit_url || "#";
-
-        document.getElementById("savedPath").textContent = data.path || "-";
-        document.getElementById("originalName").textContent = data.original_filename || "-";
-        document.getElementById("safeName").textContent = data.safe_filename || "-";
-
-        resultBox.classList.add("show");
-      } catch (err) {
-        setStatus(`Không thể kết nối đến hệ thống upload: ${err.message}`, "err");
-      } finally {
-        uploadBtn.disabled = false;
-        busyText.textContent = "";
-      }
+    uploadAllBtn.addEventListener("click", async () => {
+      await uploadAllSequentially();
     });
 
-    document.querySelectorAll("[data-copy-target]").forEach((btn) => {
-      btn.addEventListener("click", async () => {
-        const targetId = btn.getAttribute("data-copy-target");
-        const el = document.getElementById(targetId);
-        const text = el?.textContent || "";
-        if (!text) return;
-
-        try {
-          await navigator.clipboard.writeText(text);
-          const old = btn.textContent;
-          btn.textContent = "Copied";
-          setTimeout(() => {
-            btn.textContent = old;
-          }, 900);
-        } catch {
-          btn.textContent = "Error";
-          setTimeout(() => {
-            btn.textContent = "Copy";
-          }, 900);
-        }
-      });
+    clearQueueBtn.addEventListener("click", () => {
+      uploadQueue = [];
+      clearStatus();
+      renderQueue();
+      setButtons();
     });
 
-    updateMeta(null);
+    stopBtn.addEventListener("click", () => {
+      shouldStop = true;
+      setStatus("Sẽ dừng sau khi file hiện tại upload xong.", "err");
+    });
+
+    renderQueue();
+    setButtons();
   </script>
 </body>
 </html>
