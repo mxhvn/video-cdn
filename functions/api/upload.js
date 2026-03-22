@@ -107,7 +107,9 @@ export async function onRequestPost(context) {
     const uint8 = new Uint8Array(arrayBuffer);
     const base64Content = bytesToBase64(uint8);
     const safeFilename = sanitizeFilename(originalName);
-    const path = `public/uploads/${safeFilename}`;
+    
+    //const path = `public/uploads/${safeFilename}`;
+    const path = `public/epic-01/${safeFilename}`;
     const sha256 = await sha256Hex(arrayBuffer);
 
     const githubApiUrl = `https://api.github.com/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/contents/${path}`;
@@ -158,7 +160,8 @@ export async function onRequestPost(context) {
 
     const rawBaseUrl = PAGES_BASE_URL || new URL(request.url).origin;
     const baseUrl = rawBaseUrl.replace(/\/+$/, "");
-    const pagesUrl = new URL(`/uploads/${safeFilename}`, `${baseUrl}/`).toString();
+    //const pagesUrl = new URL(`/uploads/${safeFilename}`, `${baseUrl}/`).toString();
+    const pagesUrl = new URL(`/epic-01/${safeFilename}`, `${baseUrl}/`).toString();
     const jsdelivrUrl = `https://cdn.jsdelivr.net/gh/${GITHUB_OWNER}/${GITHUB_REPO}@${GITHUB_BRANCH}/${path}`;
     const commitUrl = ghData?.commit?.html_url || null;
 
