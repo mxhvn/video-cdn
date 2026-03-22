@@ -3,222 +3,527 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MP4 Uploader → GitHub → Pages → jsDelivr</title>
+  <title>Video Upload</title>
+  <meta name="theme-color" content="#0f172a" />
   <style>
     :root {
-      --bg: #0b1020;
-      --panel: #121933;
-      --text: #eaf0ff;
-      --muted: #9fb0d9;
-      --accent: #6ea8fe;
-      --danger: #ff6b6b;
-      --ok: #51cf66;
-      --border: #253056;
+      --bg: #0b1220;
+      --panel: rgba(15, 23, 42, 0.88);
+      --panel-strong: #111827;
+      --text: #e5eefc;
+      --muted: #94a3b8;
+      --line: rgba(148, 163, 184, 0.16);
+      --line-strong: rgba(148, 163, 184, 0.24);
+      --brand: #60a5fa;
+      --brand-2: #3b82f6;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 12px;
+      --maxw: 920px;
     }
-    * { box-sizing: border-box; }
-    body {
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(180deg, #0b1020, #0f1730);
+      padding: 0;
+      min-height: 100%;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       color: var(--text);
-      min-height: 100vh;
-      padding: 24px;
+      background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(96,165,250,0.12), transparent 24%),
+        linear-gradient(180deg, #08111f 0%, #0b1220 45%, #0a1020 100%);
     }
-    .wrap {
-      max-width: 820px;
+
+    body {
+      padding: 32px 18px 48px;
+    }
+
+    .shell {
+      max-width: var(--maxw);
       margin: 0 auto;
     }
-    .card {
-      background: rgba(18, 25, 51, 0.92);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      backdrop-filter: blur(8px);
+
+    .hero {
+      margin-bottom: 18px;
+      padding: 4px 2px 0;
     }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      color: #c7d7f6;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #60a5fa, #2563eb);
+      box-shadow: 0 0 18px rgba(96,165,250,0.7);
+    }
+
     h1 {
-      margin: 0 0 8px;
-      font-size: 28px;
+      margin: 18px 0 10px;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.06;
+      letter-spacing: -0.03em;
     }
-    p {
+
+    .sub {
+      margin: 0;
+      max-width: 720px;
+      font-size: 16px;
+      line-height: 1.7;
       color: var(--muted);
-      line-height: 1.5;
     }
-    .row {
-      display: grid;
-      gap: 16px;
+
+    .card {
+      margin-top: 26px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
     }
+
+    .card-inner {
+      padding: 26px;
+    }
+
     .dropzone {
-      border: 2px dashed var(--border);
-      border-radius: 16px;
-      padding: 20px;
+      position: relative;
+      border: 1.5px dashed rgba(96,165,250,0.35);
+      border-radius: 20px;
+      padding: 28px 20px;
+      min-height: 220px;
+      display: grid;
+      place-items: center;
       text-align: center;
-      transition: 0.2s ease;
-      background: rgba(255,255,255,0.02);
+      background:
+        linear-gradient(180deg, rgba(96,165,250,0.06), rgba(255,255,255,0.02));
+      transition: 0.22s ease;
     }
+
     .dropzone.dragover {
-      border-color: var(--accent);
-      background: rgba(110,168,254,0.08);
+      transform: translateY(-1px);
+      border-color: rgba(96,165,250,0.78);
+      background:
+        linear-gradient(180deg, rgba(96,165,250,0.14), rgba(255,255,255,0.03));
+      box-shadow: inset 0 0 0 1px rgba(96,165,250,0.18);
     }
-    input[type="file"] {
-      width: 100%;
-      color: var(--text);
+
+    .drop-inner {
+      max-width: 520px;
     }
-    button {
-      border: 0;
-      border-radius: 12px;
+
+    .icon-wrap {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 18px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, rgba(96,165,250,0.18), rgba(59,130,246,0.08));
+      border: 1px solid rgba(96,165,250,0.22);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .icon-wrap svg {
+      width: 34px;
+      height: 34px;
+      opacity: 0.96;
+    }
+
+    .drop-title {
+      margin: 0 0 10px;
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .drop-copy {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .file-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(96,165,250,0.26);
+      background: linear-gradient(180deg, rgba(96,165,250,0.20), rgba(59,130,246,0.12));
+      color: #f3f8ff;
+      border-radius: 14px;
       padding: 12px 16px;
-      background: var(--accent);
-      color: #081224;
       font-weight: 700;
       cursor: pointer;
+      transition: 0.18s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
     }
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+
+    .file-trigger:hover {
+      transform: translateY(-1px);
+      border-color: rgba(96,165,250,0.45);
     }
-    .small {
-      font-size: 13px;
-      color: var(--muted);
+
+    .file-trigger input {
+      display: none;
     }
-    .status {
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-      white-space: pre-wrap;
+
+    .selected {
+      margin-top: 16px;
+      font-size: 14px;
+      color: #c7d7f6;
       word-break: break-word;
     }
-    .status.ok { border-color: rgba(81,207,102,0.45); }
-    .status.err { border-color: rgba(255,107,107,0.45); }
-    .result {
-      margin-top: 18px;
-      display: grid;
-      gap: 10px;
-    }
-    .result a {
-      color: #9ec5fe;
-      text-decoration: none;
-      word-break: break-all;
-    }
+
     .meta {
+      display: none;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .meta.show {
       display: grid;
-      gap: 8px;
-      margin-top: 12px;
+    }
+
+    .meta-item {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      line-height: 1.55;
+      color: #edf4ff;
+      word-break: break-word;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      appearance: none;
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 800;
+      color: #08111f;
+      background: linear-gradient(180deg, #93c5fd 0%, #60a5fa 100%);
+      cursor: pointer;
+      transition: 0.18s ease;
+      min-width: 160px;
+      box-shadow: 0 10px 30px rgba(59,130,246,0.28);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .busy {
       color: var(--muted);
       font-size: 14px;
     }
-    .grid {
+
+    .status {
+      display: none;
+      margin-top: 20px;
+      border-radius: 16px;
+      padding: 15px 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.6;
+    }
+
+    .status.show {
+      display: block;
+    }
+
+    .status.ok {
+      border-color: rgba(34,197,94,0.35);
+      background: rgba(34,197,94,0.06);
+    }
+
+    .status.err {
+      border-color: rgba(239,68,68,0.35);
+      background: rgba(239,68,68,0.06);
+    }
+
+    .result {
+      display: none;
+      margin-top: 22px;
+      gap: 14px;
+    }
+
+    .result.show {
+      display: grid;
+    }
+
+    .result-card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .result-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .result-link-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .result-link {
+      color: #b9d6ff;
+      text-decoration: none;
+      line-height: 1.6;
+      word-break: break-all;
+      font-size: 14px;
+      flex: 1 1 420px;
+    }
+
+    .copy-btn {
+      appearance: none;
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.05);
+      color: #eef5ff;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .details {
       display: grid;
       gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 4px;
     }
-    @media (min-width: 720px) {
-      .grid.two {
-        grid-template-columns: 1fr 1fr;
-      }
+
+    .detail {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(255,255,255,0.02);
     }
-    code {
-      background: rgba(255,255,255,0.06);
-      padding: 2px 6px;
-      border-radius: 8px;
-    }
-    .copy-btn {
-      background: #dbeafe;
-      margin-left: 8px;
-      padding: 8px 10px;
-      border-radius: 10px;
+
+    .detail-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
       font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
-    .line {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
+
+    .detail-value {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #edf4ff;
+      word-break: break-word;
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 18px 14px 36px;
+      }
+
+      .card-inner {
+        padding: 18px;
+      }
+
+      .dropzone {
+        min-height: 200px;
+        padding: 22px 16px;
+      }
+
+      .meta,
+      .details {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-primary {
+        width: 100%;
+      }
+
+      .actions {
+        align-items: stretch;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <h1>MP4 Uploader</h1>
-      <p>
-        Upload file MP4 lên GitHub qua Pages Function, sau đó lấy lại URL từ Pages và jsDelivr.
+  <main class="shell">
+    <section class="hero">
+      <span class="eyebrow">Secure Upload Portal</span>
+      <h1>Upload video nhanh chóng, nhận URL sẵn sàng để chia sẻ</h1>
+      <p class="sub">
+        Tải lên file MP4 và hệ thống sẽ tự động xử lý, lưu trữ và trả về các đường dẫn truy cập ngay sau khi hoàn tất.
       </p>
+    </section>
 
-      <div class="grid two">
+    <section class="card">
+      <div class="card-inner">
         <div class="dropzone" id="dropzone">
-          <p><strong>Kéo thả file MP4 vào đây</strong></p>
-          <p class="small">hoặc chọn file bên dưới</p>
-          <input id="fileInput" type="file" accept="video/mp4" />
+          <div class="drop-inner">
+            <div class="icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 16V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.5 9.5L12 6l3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 18h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <h2 class="drop-title">Kéo thả file MP4 vào đây</h2>
+            <p class="drop-copy">
+              Hoặc chọn file từ thiết bị của bạn để bắt đầu tải lên.
+            </p>
+
+            <label class="file-trigger">
+              Chọn file MP4
+              <input id="fileInput" type="file" accept="video/mp4" />
+            </label>
+
+            <div class="selected" id="selectedText">Chưa có file nào được chọn</div>
+          </div>
         </div>
 
-        <div class="row">
-          <div class="small">
-            API debug:
-            <div><a href="/api/debug-github" target="_blank">/api/debug-github</a></div>
-            <div><a href="/api/debug-env" target="_blank">/api/debug-env</a></div>
+        <div class="meta" id="fileMeta">
+          <div class="meta-item">
+            <span class="meta-label">Tên file</span>
+            <div class="meta-value" id="metaName">-</div>
           </div>
-          <div class="small">
-            Lưu ý:
-            <div>- GitHub token phải là fine-grained token</div>
-            <div>- Cần quyền <code>Contents: Read and write</code></div>
-            <div>- Repo nên là public nếu dùng jsDelivr</div>
+          <div class="meta-item">
+            <span class="meta-label">Định dạng</span>
+            <div class="meta-value" id="metaType">-</div>
           </div>
+          <div class="meta-item">
+            <span class="meta-label">Kích thước</span>
+            <div class="meta-value" id="metaSize">-</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="uploadBtn" class="btn-primary">Upload video</button>
+          <span class="busy" id="busyText"></span>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <div id="result" class="result">
+          <div class="result-card">
+            <div class="result-title">Pages URL</div>
+            <div class="result-link-row">
+              <a id="pagesUrl" class="result-link" href="#" target="_blank" rel="noopener noreferrer"></a>
+              <button class="copy-btn" data-copy-target="pagesUrl">Copy</button>
+            </div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-title">jsDelivr URL</div>
+            <div class="result-link-row">
+              <a id="jsdUrl" class="result-link" href="#" target="_blank" rel="noopener noreferrer"></a>
+              <button class="copy-btn" data-copy-target="jsdUrl">Copy</button>
+            </div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-title">Commit URL</div>
+            <div class="result-link-row">
+              <a id="commitUrl" class="result-link" href="#" target="_blank" rel="noopener noreferrer"></a>
+              <button class="copy-btn" data-copy-target="commitUrl">Copy</button>
+            </div>
+          </div>
+
+          <div class="details">
+            <div class="detail">
+              <span class="detail-label">Saved Path</span>
+              <div id="savedPath" class="detail-value">-</div>
+            </div>
+            <div class="detail">
+              <span class="detail-label">Original Name</span>
+              <div id="originalName" class="detail-value">-</div>
+            </div>
+            <div class="detail">
+              <span class="detail-label">Safe Name</span>
+              <div id="safeName" class="detail-value">-</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          Hệ thống đã sẵn sàng để sử dụng trong môi trường production.
         </div>
       </div>
-
-      <div class="meta" id="fileMeta"></div>
-
-      <div class="line" style="margin-top:16px;">
-        <button id="uploadBtn">Upload MP4</button>
-        <span class="small" id="busyText"></span>
-      </div>
-
-      <div id="status" class="status" style="display:none;"></div>
-
-      <div id="result" class="result" style="display:none;">
-        <div>
-          <strong>Pages URL:</strong>
-          <div class="line">
-            <a id="pagesUrl" href="#" target="_blank" rel="noopener noreferrer"></a>
-            <button class="copy-btn" data-copy-target="pagesUrl">Copy</button>
-          </div>
-        </div>
-
-        <div>
-          <strong>jsDelivr URL:</strong>
-          <div class="line">
-            <a id="jsdUrl" href="#" target="_blank" rel="noopener noreferrer"></a>
-            <button class="copy-btn" data-copy-target="jsdUrl">Copy</button>
-          </div>
-        </div>
-
-        <div>
-          <strong>Commit URL:</strong>
-          <div class="line">
-            <a id="commitUrl" href="#" target="_blank" rel="noopener noreferrer"></a>
-            <button class="copy-btn" data-copy-target="commitUrl">Copy</button>
-          </div>
-        </div>
-
-        <div>
-          <strong>Saved Path:</strong>
-          <div id="savedPath" class="small"></div>
-        </div>
-
-        <div>
-          <strong>Original Name:</strong>
-          <div id="originalName" class="small"></div>
-        </div>
-
-        <div>
-          <strong>Safe Name:</strong>
-          <div id="safeName" class="small"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
   <script>
     const fileInput = document.getElementById("fileInput");
@@ -226,8 +531,9 @@
     const statusBox = document.getElementById("status");
     const resultBox = document.getElementById("result");
     const busyText = document.getElementById("busyText");
-    const fileMeta = document.getElementById("fileMeta");
     const dropzone = document.getElementById("dropzone");
+    const fileMeta = document.getElementById("fileMeta");
+    const selectedText = document.getElementById("selectedText");
 
     let selectedFile = null;
 
@@ -244,44 +550,57 @@
     }
 
     function setStatus(message, type = "") {
-      statusBox.style.display = "block";
-      statusBox.className = `status ${type}`.trim();
+      statusBox.className = `status show ${type}`.trim();
       statusBox.textContent = message;
     }
 
+    function clearStatus() {
+      statusBox.className = "status";
+      statusBox.textContent = "";
+    }
+
     function clearResult() {
-      resultBox.style.display = "none";
+      resultBox.classList.remove("show");
       document.getElementById("pagesUrl").textContent = "";
       document.getElementById("pagesUrl").href = "#";
       document.getElementById("jsdUrl").textContent = "";
       document.getElementById("jsdUrl").href = "#";
       document.getElementById("commitUrl").textContent = "";
       document.getElementById("commitUrl").href = "#";
-      document.getElementById("savedPath").textContent = "";
-      document.getElementById("originalName").textContent = "";
-      document.getElementById("safeName").textContent = "";
+      document.getElementById("savedPath").textContent = "-";
+      document.getElementById("originalName").textContent = "-";
+      document.getElementById("safeName").textContent = "-";
     }
 
     function updateMeta(file) {
       if (!file) {
-        fileMeta.innerHTML = "";
+        fileMeta.classList.remove("show");
+        selectedText.textContent = "Chưa có file nào được chọn";
+        document.getElementById("metaName").textContent = "-";
+        document.getElementById("metaType").textContent = "-";
+        document.getElementById("metaSize").textContent = "-";
         return;
       }
-      fileMeta.innerHTML = `
-        <div><strong>Tên file:</strong> ${file.name}</div>
-        <div><strong>Loại:</strong> ${file.type || "unknown"}</div>
-        <div><strong>Kích thước:</strong> ${formatBytes(file.size)}</div>
-      `;
+
+      fileMeta.classList.add("show");
+      selectedText.textContent = file.name;
+      document.getElementById("metaName").textContent = file.name;
+      document.getElementById("metaType").textContent = file.type || "video/mp4";
+      document.getElementById("metaSize").textContent = formatBytes(file.size);
+    }
+
+    function setFile(file) {
+      selectedFile = file || null;
+      updateMeta(selectedFile);
+      clearResult();
+      clearStatus();
     }
 
     fileInput.addEventListener("change", () => {
-      selectedFile = fileInput.files?.[0] || null;
-      updateMeta(selectedFile);
-      clearResult();
-      statusBox.style.display = "none";
+      setFile(fileInput.files?.[0] || null);
     });
 
-    ["dragenter", "dragover"].forEach(eventName => {
+    ["dragenter", "dragover"].forEach((eventName) => {
       dropzone.addEventListener(eventName, (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -289,7 +608,7 @@
       });
     });
 
-    ["dragleave", "drop"].forEach(eventName => {
+    ["dragleave", "drop"].forEach((eventName) => {
       dropzone.addEventListener(eventName, (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -300,25 +619,23 @@
     dropzone.addEventListener("drop", (e) => {
       const file = e.dataTransfer?.files?.[0];
       if (!file) return;
-      selectedFile = file;
+
       const dt = new DataTransfer();
       dt.items.add(file);
       fileInput.files = dt.files;
-      updateMeta(selectedFile);
-      clearResult();
-      statusBox.style.display = "none";
+      setFile(file);
     });
 
     uploadBtn.addEventListener("click", async () => {
       clearResult();
 
       if (!selectedFile) {
-        setStatus("Chưa chọn file MP4.", "err");
+        setStatus("Vui lòng chọn file MP4 trước khi tải lên.", "err");
         return;
       }
 
       if (!selectedFile.name.toLowerCase().endsWith(".mp4")) {
-        setStatus("Chỉ hỗ trợ file .mp4", "err");
+        setStatus("Hệ thống chỉ hỗ trợ định dạng MP4.", "err");
         return;
       }
 
@@ -326,8 +643,8 @@
       formData.append("file", selectedFile);
 
       uploadBtn.disabled = true;
-      busyText.textContent = "Đang upload...";
-      setStatus("Đang gửi file lên API...", "");
+      busyText.textContent = "Đang xử lý và tải lên...";
+      setStatus("Đang tải file lên hệ thống. Vui lòng chờ trong giây lát.");
 
       try {
         const response = await fetch("/api/upload", {
@@ -338,12 +655,17 @@
         const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-          const pretty = JSON.stringify(data, null, 2);
-          setStatus(`Upload lỗi (${response.status})\n${pretty}`, "err");
+          const message = data?.error
+            ? `${data.error}${data.github_status ? ` (${data.github_status})` : ""}`
+            : `Upload lỗi (${response.status})`;
+          setStatus(message, "err");
           return;
         }
 
-        setStatus("Upload thành công. Có thể cần chờ Pages redeploy vài chục giây trước khi mở URL.", "ok");
+        setStatus(
+          "Upload thành công. Liên kết có thể cần vài chục giây để đồng bộ hoàn tất trước khi truy cập.",
+          "ok"
+        );
 
         document.getElementById("pagesUrl").textContent = data.pages_url || "";
         document.getElementById("pagesUrl").href = data.pages_url || "#";
@@ -354,20 +676,20 @@
         document.getElementById("commitUrl").textContent = data.commit_url || "";
         document.getElementById("commitUrl").href = data.commit_url || "#";
 
-        document.getElementById("savedPath").textContent = data.path || "";
-        document.getElementById("originalName").textContent = data.original_filename || "";
-        document.getElementById("safeName").textContent = data.safe_filename || "";
+        document.getElementById("savedPath").textContent = data.path || "-";
+        document.getElementById("originalName").textContent = data.original_filename || "-";
+        document.getElementById("safeName").textContent = data.safe_filename || "-";
 
-        resultBox.style.display = "grid";
+        resultBox.classList.add("show");
       } catch (err) {
-        setStatus(`Lỗi mạng hoặc exception:\n${err.message}`, "err");
+        setStatus(`Không thể kết nối đến hệ thống upload: ${err.message}`, "err");
       } finally {
         uploadBtn.disabled = false;
         busyText.textContent = "";
       }
     });
 
-    document.querySelectorAll("[data-copy-target]").forEach(btn => {
+    document.querySelectorAll("[data-copy-target]").forEach((btn) => {
       btn.addEventListener("click", async () => {
         const targetId = btn.getAttribute("data-copy-target");
         const el = document.getElementById(targetId);
@@ -378,12 +700,19 @@
           await navigator.clipboard.writeText(text);
           const old = btn.textContent;
           btn.textContent = "Copied";
-          setTimeout(() => { btn.textContent = old; }, 1000);
+          setTimeout(() => {
+            btn.textContent = old;
+          }, 900);
         } catch {
-          alert("Không copy được.");
+          btn.textContent = "Error";
+          setTimeout(() => {
+            btn.textContent = "Copy";
+          }, 900);
         }
       });
     });
+
+    updateMeta(null);
   </script>
 </body>
 </html>
