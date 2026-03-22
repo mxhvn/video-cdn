@@ -1,76 +1,56 @@
-function json(data, status = 200) {
-  return new Response(JSON.stringify(data, null, 2), {
-    status,
-    headers: { "Content-Type": "application/json; charset=utf-8" }
-  });
-}
+function showMeta(token) {
+  if (!token) {
+    return {
+      exists: false,
+      length: 0,
+      first_char_code: null,
+      last_char_code: null,
+      starts_with_github_pat: false,
+      starts_with_quote: false,
+      ends_with_quote: false,
+      has_newline: false,
+      has_space_prefix: false,
+      has_space_suffix: false,
+      preview: "missing"
+    };
+  }
 
-function maskToken(token) {
-  if (!token) return "missing";
-  if (token.length < 12) return `${token.slice(0, 4)}...`;
-  return `${token.slice(0, 8)}...${token.slice(-4)}`;
+  return {
+    exists: true,
+    length: token.length,
+    first_char_code: token.charCodeAt(0),
+    last_char_code: token.charCodeAt(token.length - 1),
+    starts_with_github_pat: token.startsWith("github_pat_"),
+    starts_with_quote: token.startsWith('"') || token.startsWith("'"),
+    ends_with_quote: token.endsWith('"') || token.endsWith("'"),
+    has_newline: token.includes("\n") || token.includes("\r"),
+    has_space_prefix: /^\s/.test(token),
+    has_space_suffix: /\s$/.test(token),
+    preview:
+      token.length > 12
+        ? `${token.slice(0, 10)}...${token.slice(-4)}`
+        : token
+  };
 }
 
 export async function onRequestGet(context) {
   const { env } = context;
 
-  const headers = {
-    Authorization: `Bearer ${env.GITHUB_TOKEN}`,
-    Accept: "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2022-11-28",
-    "User-Agent": "cf-pages-debug"
-  };
-
-  const out = {
-    env: {
-      has_token: !!env.GITHUB_TOKEN,
-      token_preview: maskToken(env.GITHUB_TOKEN),
-      owner: env.GITHUB_OWNER || null,
-      repo: env.GITHUB_REPO || null,
-      branch: env.GITHUB_BRANCH || null
-    }
-  };
-
-  const userResp = await fetch("https://api.github.com/user", { headers });
-  out.user_status = userResp.status;
-  out.user_body = await userResp.json().catch(() => null);
-
-  const repoResp = await fetch(
-    `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}`,
-    { headers }
-  );
-  out.repo_status = repoResp.status;
-  out.repo_body = await repoResp.json().catch(() => null);
-
-  const branchResp = await fetch(
-    `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/branches/${env.GITHUB_BRANCH}`,
-    { headers }
-  );
-  out.branch_status = branchResp.status;
-  out.branch_body = await branchResp.json().catch(() => null);
-
-  const putResp = await fetch(
-    `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/public/uploads/debug-write.txt`,
-    {
-      method: "PUT",
-      headers: {
-        ...headers,
-        "Content-Type": "application/json"
+  return new Response(
+    JSON.stringify(
+      {
+        token_meta: showMeta(env.GITHUB_TOKEN),
+        owner: env.GITHUB_OWNER || null,
+        repo: env.GITHUB_REPO || null,
+        branch: env.GITHUB_BRANCH || null
       },
-      body: JSON.stringify({
-        message: "debug write test",
-        content: "ZGVidWcgd3JpdGUgdGVzdAo=",
-        branch: env.GITHUB_BRANCH,
-        committer: {
-          name: env.GITHUB_COMMITTER_NAME || "Cloudflare Pages Bot",
-          email: env.GITHUB_COMMITTER_EMAIL || "mxhvn@users.noreply.github.com"
-        }
-      })
+      null,
+      2
+    ),
+    {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      }
     }
   );
-
-  out.put_status = putResp.status;
-  out.put_body = await putResp.json().catch(() => null);
-
-  return json(out);
 }
