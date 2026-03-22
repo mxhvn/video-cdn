@@ -10,7 +10,7 @@ Demo MVP: upload file MP4 từ giao diện Cloudflare Pages, Pages Function comm
 
 ## 1) Tạo GitHub repo
 
-Ví dụ repo public: `mxhvn/video-cdn-demo`
+Ví dụ repo public: `mxhvn/video-cdn`
 
 Cloudflare Pages sẽ build từ chính repo này.
 
