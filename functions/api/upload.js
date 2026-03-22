@@ -156,8 +156,9 @@ export async function onRequestPost(context) {
       }, 502);
     }
 
-    const baseUrl = PAGES_BASE_URL || new URL(request.url).origin;
-    const pagesUrl = `${baseUrl}/uploads/${safeFilename}`;
+    const rawBaseUrl = PAGES_BASE_URL || new URL(request.url).origin;
+    const baseUrl = rawBaseUrl.replace(/\/+$/, "");
+    const pagesUrl = new URL(`/uploads/${safeFilename}`, `${baseUrl}/`).toString();
     const jsdelivrUrl = `https://cdn.jsdelivr.net/gh/${GITHUB_OWNER}/${GITHUB_REPO}@${GITHUB_BRANCH}/${path}`;
     const commitUrl = ghData?.commit?.html_url || null;
 
